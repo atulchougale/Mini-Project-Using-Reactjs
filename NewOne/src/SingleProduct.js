@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useProductContext } from "./Context/ProductContext";
-
+import PageNavigation from "./components/PageNavigation";
+import {Container} from "./styles/Container";
+import FormatPrice from "./Helpers/FormatPrice";
+import { MdSecurity } from "react-icons/md";
+import { TbTruckDelivery, TbReplace } from "react-icons/tb";
+import Rating from "./components/Rating";
 
 const API="https://6381eefa9842ca8d3c9d0014.mockapi.io/foodiis"
 
@@ -18,6 +23,7 @@ const SingleProduct=()=>{
     price,
     quantity,
     rating,
+    image,
 
   }=singleProduct;
 
@@ -25,7 +31,7 @@ const SingleProduct=()=>{
     
 
   useEffect(() => {
-    getSingleProduct(`${API}?id=${id}`);
+    getSingleProduct(`${API}/${id}`);
   }, []);
 
   if (isSingleLoading) {
@@ -33,7 +39,61 @@ const SingleProduct=()=>{
   }
 
 
-  return <h1>Single page {name}</h1>;
+  return (
+    <Wrapper>
+      <PageNavigation title={name} />
+      <Container className="container">
+        <div className="grid grid-two-column">
+          {/* product image */}
+          <div className="product-images">
+            <img src={image} alt="product images " />
+          </div>
+          {/* product data */}
+          <div className="product-data">
+            <h2>{name}</h2>
+            <Rating rating={rating} />
+            <p className="product-data-price">
+              MRP:
+              <del>
+                <FormatPrice price={price} />
+              </del>
+            </p>
+            <p className="product-data-price product-data-real-price">
+              Deal of the Day: <FormatPrice price={price} />
+            </p>
+              <div className="product-data-warranty">
+              <div className="product-warranty-data">
+                <TbTruckDelivery className="warranty-icon" />
+                <p>Fastest Delivery</p>
+              </div>
+
+              <div className="product-warranty-data">
+                <TbReplace className="warranty-icon" />
+                <p>30 Minutes Delivery</p>
+              </div>
+
+              
+
+              <div className="product-warranty-data">
+                <MdSecurity className="warranty-icon" />
+                <p>Fresh Food </p>
+              </div>
+              </div>
+              <div className="product-data-info">
+              <p>
+                Available:
+                <span> {quantity > 0 ? "In Stock" : "Not Available"}</span>
+              </p>
+             
+              <p>
+                Category :<span> {category} </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </Wrapper>
+  );
 };
 
 
@@ -100,9 +160,19 @@ const Wrapper = styled.section`
   }
 
   .product-images {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    background-size: cover;
+    object-fit: contain;
+    cursor: pointer;
+    box-shadow: ${({ theme }) => theme.colors.shadow};
+    border-radius:1rem;
   }
 
   @media (max-width: ${({ theme }) => theme.media.mobile}) {
