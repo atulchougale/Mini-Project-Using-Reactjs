@@ -8,6 +8,7 @@ import FormatPrice from "./Helpers/FormatPrice";
 import { MdSecurity } from "react-icons/md";
 import { TbTruckDelivery, TbReplace } from "react-icons/tb";
 import Rating from "./components/Rating";
+import AddToCart from "./components/AddToCart";
 
 const API="https://6381eefa9842ca8d3c9d0014.mockapi.io/foodiis"
 
@@ -55,7 +56,7 @@ const SingleProduct=()=>{
             <p className="product-data-price">
               MRP:
               <del>
-                <FormatPrice price={price} />
+                <FormatPrice price={Number(price)+100} />
               </del>
             </p>
             <p className="product-data-price product-data-real-price">
@@ -89,6 +90,8 @@ const SingleProduct=()=>{
                 Category :<span> {category} </span>
               </p>
             </div>
+            <hr />
+            {quantity > 0 && <AddToCart product={singleProduct} />}
           </div>
         </div>
       </Container>
