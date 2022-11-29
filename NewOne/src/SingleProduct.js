@@ -36,7 +36,9 @@ const SingleProduct=()=>{
   }, []);
 
   if (isSingleLoading) {
-    return <div className="page_loading">Loading.....</div>;
+    return <Loading>
+      <img src="https://i.ibb.co/r7n48gt/loader.gif" alt="...Loading" />
+    </Loading>;
   }
 
 
@@ -99,6 +101,15 @@ const SingleProduct=()=>{
   );
 };
 
+const Loading = styled.div`
+display:grid;
+
+palce-items:center;
+height:30vh;
+margin-left:55rem;
+
+
+`;
 
 const Wrapper = styled.section`
   .container {
@@ -177,6 +188,14 @@ const Wrapper = styled.section`
     box-shadow: ${({ theme }) => theme.colors.shadow};
     border-radius:1rem;
   }
+
+  // .page_loading {
+  //   display:grid;
+  //   margin-top:10rem;
+  //   palce-items:center;
+  //   height:50vh;
+  //   margin-left:55rem;
+  // }
 
   @media (max-width: ${({ theme }) => theme.media.mobile}) {
     padding: 0 2.4rem;

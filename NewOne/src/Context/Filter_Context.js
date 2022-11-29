@@ -7,12 +7,14 @@ const FilterContext = createContext();
 const initialState ={
     filter_products :[],
     all_products :[],
-    grid_view :false,
+    grid_view :true,
     sorting_value:"lowest",
     filters: {
         text: "",
-        category: "all",
-        company: "all",
+        category: "All",
+        maxPrice:0,
+        price:0,
+        minPrice:0,
       },
 };
 
@@ -47,8 +49,13 @@ export const FilterContextProvider =({children})=>{
     //   value = event.target.value;
     // }
 
-    return dispatch({ type: "UPDATE_FILTERS_VALUE", payload: { name, value } });
+    return dispatch({ type:"UPDATE_FILTERS_VALUE", payload: { name, value } });
   };
+
+  // to clears the filters
+  const clearFilters=()=>{
+    dispatch({type:"CLEAR_FILERS"})
+  }
 
   // to sort the product
   useEffect(() => {
@@ -67,7 +74,8 @@ export const FilterContextProvider =({children})=>{
             setGridView, 
             setListView, 
             sorting ,
-            updateFilterValue
+            updateFilterValue,
+            clearFilters,
             }}>
             {children}
         </FilterContext.Provider>

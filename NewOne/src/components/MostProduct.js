@@ -7,14 +7,16 @@ const MostProduct = () => {
   const { isLoading, mostProducts } = useProductContext();
   
   if (isLoading) {
-    return <div> ......Loading </div>;
+    return <Loading className="loading"> 
+      <img src="https://i.ibb.co/r7n48gt/loader.gif" alt="...Loading" />
+     </Loading>;
   }
 
   return (
     <Wrapper className="section">
       <div className="container">
         <div className="intro-data">Check Now!</div>
-        <div className="common-heading">Our Most Oredered Food</div>
+        <div className="common-heading">Our Most Populer Food</div>
         <div className="grid grid-five-column">
           {mostProducts && mostProducts.map((curElem) => {
             return <Product key={curElem.id} {...curElem} />;
@@ -24,6 +26,20 @@ const MostProduct = () => {
     </Wrapper>
   );
 };
+
+const Loading = styled.div`
+display:grid;
+margin-top:10rem;
+palce-items:center;
+height:50vh;
+margin-left:55rem;
+
+// img{
+//   font-size:4.2rem;
+//   text-transform:capitalize;
+//   font-weight:300;
+// }
+`;
 
 const Wrapper = styled.section`
   padding: 9rem 0;
@@ -120,6 +136,8 @@ const Wrapper = styled.section`
     display: grid;
     gap: 3rem;
   }
+
+ 
 `;
 
 export default MostProduct;

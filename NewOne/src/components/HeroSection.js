@@ -14,7 +14,7 @@ const HeroSection = () => {
                 <p className="hung">Are You Hungry ?</p>
                 <p className="p2">Don't Wait !!!</p>
                 <p className="p2">Let Start To Order Food Now !</p>
-            <NavLink>
+            <NavLink to="/products">
                 <Button>CHECKOUT MENU</Button>
             </NavLink>
         </div>

@@ -1,10 +1,25 @@
 import React from 'react'
 import styled from 'styled-components';
 import { useFiltercontext } from '../Context/Filter_Context';
+import FormatPrice from "../Helpers/FormatPrice";
+import {Button} from "../styles/Button";
 
 
 const FilterSection = () => {
-  const {filters:{text},updateFilterValue}=useFiltercontext();
+  const {filters:{text ,category,price,maxPrice,minPrice},all_products, updateFilterValue,clearFilters}=useFiltercontext();
+
+  // TO GET THE UNIQUE DATA OF EACH FIELDS
+  const getUniqueData = (data , property)=>{
+    let newVal =data.map((curElem)=>{
+      return curElem[property]
+    });
+    return newVal=["All" , ...new Set(newVal)];
+  };
+
+  // we need uniqucdata
+  const categoryOnlyData = getUniqueData(all_products ,"category");
+
+
   return <Wrapper>
          <div className="filter-search">
         <form onSubmit={(e) => e.preventDefault()}>
@@ -17,6 +32,42 @@ const FilterSection = () => {
           />
         </form>
       </div>
+      <div className="filter-category">
+        <h3>Category</h3>
+        <div>
+          {categoryOnlyData.map((curElem ,index)=>{
+            return(
+              <button
+              key={index}
+              type="button"
+              name='category'
+              value={curElem}
+              className={curElem === category ? "active" : ""}
+              onClick={updateFilterValue}  >
+              
+            {curElem}
+            </button>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="filter_pricr">
+        <h3>Price</h3>
+          <p><FormatPrice price={price}/></p>
+          <input 
+          name="price"
+          type="range"
+          min={minPrice} 
+          max={maxPrice} 
+          value={price} 
+          onChange={updateFilterValue}
+          />
+      </div>
+      <div className="filter-clear">
+        <Button className='btn' onClick={clearFilters}>Clear Filter</Button>
+      </div>
+
   </Wrapper>
 }
 
